@@ -68,14 +68,19 @@ func NewGVPlayerWithOption(path string, async bool) (*GVPlayer, error) {
 	return p, nil
 }
 
-// LoadGVPlayerOnMemory loads a GV file into memory and creates a GVPlayer (async default true)
+// Loads a GV file into memory and creates a GVPlayer (async default true)
 func LoadGVPlayerOnMemory(path string) (*GVPlayer, error) {
+	return LoadGVPlayerOnMemoryWithOption(path, true)
+}
+
+// Loads a GV file into memory and creates a GVPlayer with async option
+func LoadGVPlayerOnMemoryWithOption(path string, async bool) (*GVPlayer, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 	reader := bytes.NewReader(data)
-	return NewGVPlayerFromReader(reader)
+	return NewGVPlayerFromReaderWithOption(reader, async)
 }
 
 // Creates a GVPlayer from an io.Reader (on-memory loading, async default true)
