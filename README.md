@@ -24,4 +24,4 @@ see [ofxExtremeGpuVideo](https://github.com/Ushio/ofxExtremeGpuVideo).
 
 ## Limitation
 
-Currently CPU decoding `DXT1/DXT3/DXT5` compressed data into `RGBA`, because Ebitengine now doesn't provide GPU compressed texture assignment.
+Currently CPU decoding `DXT1/DXT3/DXT5` compressed data into `RGBA`, because Ebitengine now doesn't provide GPU compressed texture assignment ([ebiten#867](https://github.com/hajimehoshi/ebiten/issues/867)).
