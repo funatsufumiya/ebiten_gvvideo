@@ -22,6 +22,8 @@ $ go run ./example/main.go [path/to/video.gv]
 
 see [ofxExtremeGpuVideo](https://github.com/Ushio/ofxExtremeGpuVideo).
 
+Note that you can use alpha (opacity) in your GV video. PNG sequences can be converted into .gv file.
+
 ## Limitation
 
 Currently CPU decoding `DXT1/DXT3/DXT5` compressed data into `RGBA`, because Ebitengine now doesn't provide GPU compressed texture assignment ([ebiten#867](https://github.com/hajimehoshi/ebiten/issues/867)).
