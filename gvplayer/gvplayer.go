@@ -41,7 +41,7 @@ func (p *GVPlayer) Height() int {
 }
 
 func NewGVPlayer(path string) (*GVPlayer, error) {
-	return NewGVPlayerWithOption(path, false)
+	return NewGVPlayerWithOption(path, true)
 }
 
 func NewGVPlayerWithOption(path string, async bool) (*GVPlayer, error) {
