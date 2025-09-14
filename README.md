@@ -12,7 +12,3 @@ GV video player for [Ebitengine](https://ebitengine.org/), using [go-gv-video](h
 ```bash
 $ go run ./example/main.go
 ```
-
-## License
-
-0BSD
