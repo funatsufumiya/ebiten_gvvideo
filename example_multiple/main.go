@@ -1,0 +1,107 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"time"
+
+	"github.com/funatsufumiya/ebiten_gvvideo/gvplayer"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+)
+
+type MultiGame struct {
+	players      []*gvplayer.GVPlayer
+	errs         []error
+	windowWidth  int
+	windowHeight int
+	async        bool
+	gvPaths      []string
+	startTimes   []time.Time
+	loop         bool
+}
+
+func (mg *MultiGame) Update() error {
+	for i, player := range mg.players {
+		if mg.errs[i] != nil {
+			continue
+		}
+		if err := player.Update(); err != nil {
+			mg.errs[i] = err
+		}
+	}
+	return nil
+}
+
+func (mg *MultiGame) Draw(screen *ebiten.Image) {
+	cols := int(len(mg.players))
+	if cols == 0 {
+		return
+	}
+	w := mg.windowWidth / cols
+	h := mg.windowHeight
+	for i, player := range mg.players {
+		if mg.errs[i] != nil {
+			continue
+		}
+		op := &ebiten.DrawImageOptions{}
+		videoW := player.Width()
+		videoH := player.Height()
+		scaleX := float64(w) / float64(videoW)
+		scaleY := float64(h) / float64(videoH)
+		scale := scaleX
+		if scaleY < scaleX {
+			scale = scaleY
+		}
+		op.GeoM.Scale(scale, scale)
+		tx := float64(i*w) + float64(w)/2 - float64(videoW)*scale/2
+		ty := float64(h)/2 - float64(videoH)*scale/2
+		op.GeoM.Translate(tx, ty)
+		player.Draw(screen, op)
+		videoTime := player.CurrentTime().Seconds()
+		elapsed := time.Since(mg.startTimes[i]).Seconds()
+		msg := fmt.Sprintf("Video %d: %.2fs | Elapsed: %.2fs", i+1, videoTime, elapsed)
+		ebitenutil.DebugPrintAt(screen, msg, i*w, 16)
+	}
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %0.2f | Async: %v", ebiten.ActualFPS(), mg.async))
+}
+
+func (mg *MultiGame) Layout(outsideWidth, outsideHeight int) (int, int) {
+	mg.windowWidth = outsideWidth
+	mg.windowHeight = outsideHeight
+	return outsideWidth, outsideHeight
+}
+
+func main() {
+	var gvPaths []string
+	loop := true
+	args := os.Args[1:]
+	if len(args) > 0 {
+		gvPaths = args
+	} else {
+		gvPaths = []string{"example/test_asset/test-10px.gv", "example/test_asset/test-10px.gv"}
+		fmt.Println("[INFO] Playing default GV videos. You can specify multiple .gv files as arguments.")
+	}
+	players := make([]*gvplayer.GVPlayer, len(gvPaths))
+	errs := make([]error, len(gvPaths))
+	startTimes := make([]time.Time, len(gvPaths))
+	for i, path := range gvPaths {
+		player, err := gvplayer.NewGVPlayerWithOption(path, true)
+		if err != nil {
+			errs[i] = err
+			continue
+		}
+		player.Loop = loop
+		players[i] = player
+		startTimes[i] = time.Now()
+		player.Play()
+	}
+	mg := &MultiGame{players: players, errs: errs, async: true, gvPaths: gvPaths, startTimes: startTimes, loop: loop}
+
+	ebiten.SetWindowTitle("GV Video Multiple (Ebitengine Demo)")
+	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
+	if err := ebiten.RunGame(mg); err != nil {
+		log.Fatal(err)
+	}
+}

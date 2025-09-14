@@ -24,7 +24,7 @@ type GVPlayer struct {
 	startTime     time.Time
 	pauseTime     time.Time
 	seekTime      time.Duration
-	loop          bool
+	Loop          bool
 	async         bool
 	frameCh       chan []byte
 	stopCh        chan struct{}
@@ -104,7 +104,7 @@ func (p *GVPlayer) Update() error {
 	elapsed := time.Since(p.startTime) + p.seekTime
 	frameID := uint32(elapsed.Seconds() * float64(p.video.Header.FPS))
 	if frameID >= p.video.Header.FrameCount {
-		if p.loop {
+		if p.Loop {
 			p.startTime = time.Now()
 			p.seekTime = 0
 			frameID = 0
