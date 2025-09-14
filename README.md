@@ -7,6 +7,17 @@ GV video (Extreme Gpu Friendly Video Format) player for [Ebitengine](https://ebi
 > [!WARNING]
 > Go port was almost done by GitHub Copilot. Use with care.
 
+## Example
+
+```bash
+$ git clone https://github.com/funatsufumiya/ebiten_gvvideo
+$ cd ebiten_gvvideo
+$ go run ./example/main.go
+
+# or test your GV video
+$ go run ./example/main.go [path/to/video.gv]
+```
+
 ## What's GV video?
 
 see [ofxExtremeGpuVideo](https://github.com/Ushio/ofxExtremeGpuVideo).
