@@ -3,7 +3,7 @@ module github.com/funatsufumiya/ebiten_gvvideo
 go 1.24.2
 
 require (
-	github.com/funatsufumiya/go-gv-video v0.0.0-20250914033932-27e9a7cfca10
+	github.com/funatsufumiya/go-gv-video v0.0.1
 	github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f
 	github.com/hajimehoshi/ebiten/v2 v2.8.8
 )

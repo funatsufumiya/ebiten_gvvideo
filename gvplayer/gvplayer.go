@@ -1,7 +1,10 @@
 package gvplayer
 
 import (
+	"bytes"
 	"image"
+	"io"
+	"os"
 	"time"
 
 	"github.com/funatsufumiya/go-gv-video/gvvideo"
@@ -46,6 +49,43 @@ func NewGVPlayer(path string) (*GVPlayer, error) {
 
 func NewGVPlayerWithOption(path string, async bool) (*GVPlayer, error) {
 	video, err := gvvideo.LoadGVVideo(path)
+	if err != nil {
+		return nil, err
+	}
+	w := int(video.Header.Width)
+	h := int(video.Header.Height)
+	img := ebiten.NewImage(w, h)
+	buf := image.NewRGBA(image.Rect(0, 0, w, h))
+	p := &GVPlayer{
+		video:      video,
+		frameImage: img,
+		frameBuf:   buf,
+		state:      Stopped,
+		async:      async,
+		frameCh:    make(chan []byte, 1),
+		stopCh:     make(chan struct{}),
+	}
+	return p, nil
+}
+
+// LoadGVPlayerOnMemory loads a GV file into memory and creates a GVPlayer (async default true)
+func LoadGVPlayerOnMemory(path string) (*GVPlayer, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	reader := bytes.NewReader(data)
+	return NewGVPlayerFromReader(reader)
+}
+
+// Creates a GVPlayer from an io.Reader (on-memory loading, async default true)
+func NewGVPlayerFromReader(reader io.ReadSeeker) (*GVPlayer, error) {
+	return NewGVPlayerFromReaderWithOption(reader, true)
+}
+
+// Creates a GVPlayer from an io.Reader with async option
+func NewGVPlayerFromReaderWithOption(reader io.ReadSeeker, async bool) (*GVPlayer, error) {
+	video, err := gvvideo.LoadGVVideoFromReader(reader)
 	if err != nil {
 		return nil, err
 	}

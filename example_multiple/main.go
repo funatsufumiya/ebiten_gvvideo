@@ -23,6 +23,9 @@ type MultiGame struct {
 }
 
 func (mg *MultiGame) Update() error {
+	if ebiten.IsKeyPressed(ebiten.KeyA) {
+		mg.toggleAsync()
+	}
 	for i, player := range mg.players {
 		if mg.errs[i] != nil {
 			continue
@@ -32,6 +35,22 @@ func (mg *MultiGame) Update() error {
 		}
 	}
 	return nil
+}
+
+func (mg *MultiGame) toggleAsync() {
+	mg.async = !mg.async
+	for i, path := range mg.gvPaths {
+		mg.players[i].Stop()
+		player, err := gvplayer.NewGVPlayerWithOption(path, mg.async)
+		if err != nil {
+			mg.errs[i] = err
+			continue
+		}
+		player.Loop = mg.loop
+		mg.players[i] = player
+		mg.startTimes[i] = time.Now()
+		player.Play()
+	}
 }
 
 func (mg *MultiGame) Draw(screen *ebiten.Image) {

@@ -8,10 +8,10 @@ github.com/ebitengine/oto/v3 v3.3.3 h1:m6RV69OqoXYSWCDsHXN9rc07aDuDstGHtait7HXSM
 github.com/ebitengine/oto/v3 v3.3.3/go.mod h1:MZeb/lwoC4DCOdiTIxYezrURTw7EvK/yF863+tmBI+U=
 github.com/ebitengine/purego v0.8.0 h1:JbqvnEzRvPpxhCJzJJ2y0RbiZ8nyjccVUrSM3q+GvvE=
 github.com/ebitengine/purego v0.8.0/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
-github.com/funatsufumiya/go-gv-video v0.0.0-20250914025113-3adcc4a428d0 h1:N/55LyJUvwldTlxtw3FgoTafWXWx9usYPu9DJhecWi8=
-github.com/funatsufumiya/go-gv-video v0.0.0-20250914025113-3adcc4a428d0/go.mod h1:VvDSwCZ59SeIU2Onc7v/w6l9ufBQhOyTkRNHuYASRq0=
 github.com/funatsufumiya/go-gv-video v0.0.0-20250914033932-27e9a7cfca10 h1:+CvxLd6m6fldMsMohIC2Lokty2+aZeq0HDT+de0SQB4=
 github.com/funatsufumiya/go-gv-video v0.0.0-20250914033932-27e9a7cfca10/go.mod h1:VvDSwCZ59SeIU2Onc7v/w6l9ufBQhOyTkRNHuYASRq0=
+github.com/funatsufumiya/go-gv-video v0.0.1 h1:oRl8fJ7AnpuMPDN2WQfJVyQzeutNvb+yTLL9ZnsPXxw=
+github.com/funatsufumiya/go-gv-video v0.0.1/go.mod h1:VvDSwCZ59SeIU2Onc7v/w6l9ufBQhOyTkRNHuYASRq0=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f h1:ysqRe+lvUiL0dH5XzkH0Bz68bFMPJ4f5Si4L/HD9SGk=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f/go.mod h1:i/ebyRRv/IoHixuZ9bElZnXbmfoUVPGQpdsJ4sVuX38=
 github.com/hajimehoshi/ebiten/v2 v2.8.8 h1:xyMxOAn52T1tQ+j3vdieZ7auDBOXmvjUprSrxaIbsi8=
