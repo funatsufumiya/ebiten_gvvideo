@@ -9,6 +9,7 @@ import (
 	"github.com/funatsufumiya/ebiten_gvvideo/gvplayer"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type Game struct {
@@ -25,9 +26,9 @@ func (g *Game) Update() error {
 	if g.err != nil {
 		return g.err
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.toggleAsync()
-	}
+    if inpututil.IsKeyJustPressed(ebiten.KeyA) {
+        g.toggleAsync()
+    }
 	if err := g.player.Update(); err != nil {
 		g.err = err
 	}

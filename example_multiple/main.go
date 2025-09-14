@@ -9,6 +9,7 @@ import (
 	"github.com/funatsufumiya/ebiten_gvvideo/gvplayer"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type MultiGame struct {
@@ -23,9 +24,9 @@ type MultiGame struct {
 }
 
 func (mg *MultiGame) Update() error {
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		mg.toggleAsync()
-	}
+    if inpututil.IsKeyJustPressed(ebiten.KeyA) {
+        mg.toggleAsync()
+    }
 	for i, player := range mg.players {
 		if mg.errs[i] != nil {
 			continue
