@@ -92,6 +92,7 @@ func main() {
 		fmt.Println("[INFO] Playing the default GV video. You can specify a .gv file as an argument.")
 	}
 	player, err := gvplayer.NewGVPlayerWithOption(gvPath, true)
+	player.Loop = true
 	if err != nil {
 		log.Fatal(err)
 	}
