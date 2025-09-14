@@ -22,7 +22,7 @@ $ go run ./example/main.go [path/to/video.gv]
 
 see [ofxExtremeGpuVideo](https://github.com/Ushio/ofxExtremeGpuVideo).
 
-Note that you can use alpha (opacity) in your GV video. PNG sequences can be converted into .gv file.
+Note that you can use **alpha channel (opacity)** in your GV video. PNG sequences can be converted into .gv file.
 
 ## Limitation
 
