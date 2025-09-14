@@ -17,18 +17,19 @@ const (
 )
 
 type GVPlayer struct {
-	video       *gvvideo.GVVideo
-	frameImage  *ebiten.Image
-	frameBuf    *image.RGBA
-	state       PlayerState
-	startTime   time.Time
-	pauseTime   time.Time
-	seekTime    time.Duration
-	loop        bool
-	async       bool
-	frameCh     chan []byte
-	stopCh      chan struct{}
-	lastFrameID uint32
+	video         *gvvideo.GVVideo
+	frameImage    *ebiten.Image
+	frameBuf      *image.RGBA
+	state         PlayerState
+	startTime     time.Time
+	pauseTime     time.Time
+	seekTime      time.Duration
+	loop          bool
+	async         bool
+	frameCh       chan []byte
+	stopCh        chan struct{}
+	lastFrameID   uint32
+	lastFrameTime time.Duration
 }
 
 func (p *GVPlayer) Width() int {
@@ -119,6 +120,7 @@ func (p *GVPlayer) Update() error {
 				copy(p.frameBuf.Pix, pix)
 				p.frameImage.WritePixels(p.frameBuf.Pix)
 				p.lastFrameID = frameID
+				p.lastFrameTime = time.Duration(float64(frameID) / float64(p.video.Header.FPS) * float64(time.Second))
 			default:
 			}
 		}
@@ -130,7 +132,12 @@ func (p *GVPlayer) Update() error {
 	}
 	p.frameImage.WritePixels(p.frameBuf.Pix)
 	p.lastFrameID = frameID
+	p.lastFrameTime = time.Duration(float64(frameID) / float64(p.video.Header.FPS) * float64(time.Second))
 	return nil
+}
+
+func (p *GVPlayer) CurrentTime() time.Duration {
+	return p.lastFrameTime
 }
 
 func (p *GVPlayer) asyncUpdateLoop() {

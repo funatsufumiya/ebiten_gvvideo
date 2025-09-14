@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/funatsufumiya/ebiten_gvvideo/gvplayer"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -17,6 +18,7 @@ type Game struct {
 	windowHeight int
 	async        bool
 	gvPath       string
+	startTime    time.Time
 }
 
 func (g *Game) Update() error {
@@ -41,6 +43,7 @@ func (g *Game) toggleAsync() {
 		return
 	}
 	g.player = player
+	g.startTime = time.Now()
 	g.player.Play()
 }
 
@@ -49,6 +52,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		return
 	}
 	op := &ebiten.DrawImageOptions{}
+
 	// scale calculation
 	videoW := g.player.Width()
 	videoH := g.player.Height()
@@ -59,12 +63,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		scale = scaleY
 	}
 	op.GeoM.Scale(scale, scale)
+
 	// position center
 	tx := float64(g.windowWidth)/2 - float64(videoW)*scale/2
 	ty := float64(g.windowHeight)/2 - float64(videoH)*scale/2
 	op.GeoM.Translate(tx, ty)
 	g.player.Draw(screen, op)
+
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %0.2f | Async: %v (Key A to toggle)", ebiten.ActualFPS(), g.async))
+
+	videoTime := g.player.CurrentTime().Seconds()
+	elapsed := time.Since(g.startTime).Seconds()
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("VideoTime: %.2fs | Elapsed: %.2fs", videoTime, elapsed), 0, 16)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -81,11 +91,12 @@ func main() {
 		gvPath = "example/test_asset/test-10px.gv"
 		fmt.Println("[INFO] Playing the default GV video. You can specify a .gv file as an argument.")
 	}
-	player, err := gvplayer.NewGVPlayerWithOption(gvPath, true) // デフォルト非同期
+	player, err := gvplayer.NewGVPlayerWithOption(gvPath, true)
 	if err != nil {
 		log.Fatal(err)
 	}
 	g := &Game{player: player, async: true, gvPath: gvPath}
+	g.startTime = time.Now()
 	player.Play()
 
 	ebiten.SetWindowTitle("GV Video (Ebitengine Demo)")
