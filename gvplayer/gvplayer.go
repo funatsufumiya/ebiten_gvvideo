@@ -1,6 +1,7 @@
 package gvplayer
 
 import (
+	"image"
 	"time"
 
 	"github.com/funatsufumiya/go-gv-video/gvvideo"
@@ -18,6 +19,7 @@ const (
 type GVPlayer struct {
 	video      *gvvideo.GVVideo
 	frameImage *ebiten.Image
+	frameBuf   *image.RGBA
 	state      PlayerState
 	startTime  time.Time
 	pauseTime  time.Time
@@ -25,15 +27,27 @@ type GVPlayer struct {
 	loop       bool
 }
 
+func (p *GVPlayer) Width() int {
+	return int(p.video.Header.Width)
+}
+
+func (p *GVPlayer) Height() int {
+	return int(p.video.Header.Height)
+}
+
 func NewGVPlayer(path string) (*GVPlayer, error) {
 	video, err := gvvideo.LoadGVVideo(path)
 	if err != nil {
 		return nil, err
 	}
-	img := ebiten.NewImage(int(video.Header.Width), int(video.Header.Height))
+	w := int(video.Header.Width)
+	h := int(video.Header.Height)
+	img := ebiten.NewImage(w, h)
+	buf := image.NewRGBA(image.Rect(0, 0, w, h))
 	return &GVPlayer{
 		video:      video,
 		frameImage: img,
+		frameBuf:   buf,
 		state:      Stopped,
 	}, nil
 }
@@ -79,11 +93,11 @@ func (p *GVPlayer) Update() error {
 			return nil
 		}
 	}
-	frame, err := p.video.ReadFrame(frameID)
+	err := p.video.ReadFrameTo(frameID, p.frameBuf)
 	if err != nil {
 		return err
 	}
-	p.frameImage.WritePixels(frame)
+	p.frameImage.WritePixels(p.frameBuf.Pix)
 	return nil
 }
 
