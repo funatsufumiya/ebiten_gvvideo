@@ -17,14 +17,18 @@ const (
 )
 
 type GVPlayer struct {
-	video      *gvvideo.GVVideo
-	frameImage *ebiten.Image
-	frameBuf   *image.RGBA
-	state      PlayerState
-	startTime  time.Time
-	pauseTime  time.Time
-	seekTime   time.Duration
-	loop       bool
+	video       *gvvideo.GVVideo
+	frameImage  *ebiten.Image
+	frameBuf    *image.RGBA
+	state       PlayerState
+	startTime   time.Time
+	pauseTime   time.Time
+	seekTime    time.Duration
+	loop        bool
+	async       bool
+	frameCh     chan []byte
+	stopCh      chan struct{}
+	lastFrameID uint32
 }
 
 func (p *GVPlayer) Width() int {
@@ -36,6 +40,10 @@ func (p *GVPlayer) Height() int {
 }
 
 func NewGVPlayer(path string) (*GVPlayer, error) {
+	return NewGVPlayerWithOption(path, false)
+}
+
+func NewGVPlayerWithOption(path string, async bool) (*GVPlayer, error) {
 	video, err := gvvideo.LoadGVVideo(path)
 	if err != nil {
 		return nil, err
@@ -44,12 +52,16 @@ func NewGVPlayer(path string) (*GVPlayer, error) {
 	h := int(video.Header.Height)
 	img := ebiten.NewImage(w, h)
 	buf := image.NewRGBA(image.Rect(0, 0, w, h))
-	return &GVPlayer{
+	p := &GVPlayer{
 		video:      video,
 		frameImage: img,
 		frameBuf:   buf,
 		state:      Stopped,
-	}, nil
+		async:      async,
+		frameCh:    make(chan []byte, 1),
+		stopCh:     make(chan struct{}),
+	}
+	return p, nil
 }
 
 func (p *GVPlayer) Play() {
@@ -58,6 +70,9 @@ func (p *GVPlayer) Play() {
 	}
 	p.state = Playing
 	p.startTime = time.Now()
+	if p.async {
+		go p.asyncUpdateLoop()
+	}
 }
 
 func (p *GVPlayer) Pause() {
@@ -71,6 +86,10 @@ func (p *GVPlayer) Pause() {
 func (p *GVPlayer) Stop() {
 	p.state = Stopped
 	p.seekTime = 0
+	if p.async {
+		close(p.stopCh)
+		p.stopCh = make(chan struct{})
+	}
 }
 
 func (p *GVPlayer) Seek(to time.Duration) {
@@ -93,12 +112,48 @@ func (p *GVPlayer) Update() error {
 			return nil
 		}
 	}
+	if p.async {
+		if frameID != p.lastFrameID {
+			select {
+			case pix := <-p.frameCh:
+				copy(p.frameBuf.Pix, pix)
+				p.frameImage.WritePixels(p.frameBuf.Pix)
+				p.lastFrameID = frameID
+			default:
+			}
+		}
+		return nil
+	}
 	err := p.video.ReadFrameTo(frameID, p.frameBuf)
 	if err != nil {
 		return err
 	}
 	p.frameImage.WritePixels(p.frameBuf.Pix)
+	p.lastFrameID = frameID
 	return nil
+}
+
+func (p *GVPlayer) asyncUpdateLoop() {
+	for {
+		select {
+		case <-p.stopCh:
+			return
+		default:
+			elapsed := time.Since(p.startTime) + p.seekTime
+			frameID := uint32(elapsed.Seconds() * float64(p.video.Header.FPS))
+			if frameID != p.lastFrameID {
+				buf := image.NewRGBA(image.Rect(0, 0, p.Width(), p.Height()))
+				err := p.video.ReadFrameTo(frameID, buf)
+				if err == nil {
+					select {
+					case p.frameCh <- buf.Pix:
+					default:
+					}
+				}
+			}
+			time.Sleep(time.Millisecond * 5)
+		}
+	}
 }
 
 func (p *GVPlayer) Draw(screen *ebiten.Image, op *ebiten.DrawImageOptions) {
