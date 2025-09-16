@@ -19,8 +19,11 @@ $ git clone https://github.com/funatsufumiya/ebiten_gvvideo
 $ cd ebiten_gvvideo
 $ go run ./example/main.go
 
-# or test your GV video
+# with your GV video:
 $ go run ./example/main.go [path/to/video.gv]
+
+# with your multiple GV video:
+$ go run ./example_multiple/main.go [path/to/video_folder]
 ```
 
 ## What's GV video?
