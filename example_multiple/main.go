@@ -55,16 +55,23 @@ func (mg *MultiGame) toggleAsync() {
 }
 
 func (mg *MultiGame) Draw(screen *ebiten.Image) {
-	cols := int(len(mg.players))
-	if cols == 0 {
+	n := len(mg.players)
+	if n == 0 {
 		return
 	}
+	cols := int(1)
+	for cols*cols < n {
+		cols++
+	}
+	rows := (n + cols - 1) / cols
 	w := mg.windowWidth / cols
-	h := mg.windowHeight
+	h := mg.windowHeight / rows
 	for i, player := range mg.players {
 		if mg.errs[i] != nil {
 			continue
 		}
+		row := i / cols
+		col := i % cols
 		op := &ebiten.DrawImageOptions{}
 		videoW := player.Width()
 		videoH := player.Height()
@@ -75,14 +82,14 @@ func (mg *MultiGame) Draw(screen *ebiten.Image) {
 			scale = scaleY
 		}
 		op.GeoM.Scale(scale, scale)
-		tx := float64(i*w) + float64(w)/2 - float64(videoW)*scale/2
-		ty := float64(h)/2 - float64(videoH)*scale/2
+		tx := float64(col*w) + float64(w)/2 - float64(videoW)*scale/2
+		ty := float64(row*h) + float64(h)/2 - float64(videoH)*scale/2
 		op.GeoM.Translate(tx, ty)
 		player.Draw(screen, op)
 		videoTime := player.CurrentTime().Seconds()
 		elapsed := time.Since(mg.startTimes[i]).Seconds()
 		msg := fmt.Sprintf("Video %d: %.2fs | Elapsed: %.2fs", i+1, videoTime, elapsed)
-		ebitenutil.DebugPrintAt(screen, msg, i*w, 16)
+		ebitenutil.DebugPrintAt(screen, msg, col*w, row*h+16)
 	}
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %0.2f | Async: %v", ebiten.ActualFPS(), mg.async))
 }
