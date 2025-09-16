@@ -8,12 +8,10 @@ github.com/ebitengine/oto/v3 v3.3.3 h1:m6RV69OqoXYSWCDsHXN9rc07aDuDstGHtait7HXSM
 github.com/ebitengine/oto/v3 v3.3.3/go.mod h1:MZeb/lwoC4DCOdiTIxYezrURTw7EvK/yF863+tmBI+U=
 github.com/ebitengine/purego v0.8.0 h1:JbqvnEzRvPpxhCJzJJ2y0RbiZ8nyjccVUrSM3q+GvvE=
 github.com/ebitengine/purego v0.8.0/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
-github.com/funatsufumiya/dds-simd v0.0.1 h1:WJyNDyzoi3gFei+OVJfgDTuMc3HLseTUuAYBJlyGvJg=
-github.com/funatsufumiya/dds-simd v0.0.1/go.mod h1:sfZFNK4J4nxr2cV5N6cQgfsfcVxE6X3fYe2+5YqG5cY=
-github.com/funatsufumiya/go-gv-video v0.0.3 h1:nAjjq5jd3QJn5AjP7VzXBBWUwZe/DavpTlj3EE+a42Q=
-github.com/funatsufumiya/go-gv-video v0.0.3/go.mod h1:5XuvuPKK6iaNTvN/HnQkvdIWEWYwiB6gWZs1ZZclPI8=
-github.com/funatsufumiya/go-gv-video v0.0.4 h1:qqY7WoW8dSyxbYX/KWNcsLbVdZco12XOV4R7QPUDRb4=
-github.com/funatsufumiya/go-gv-video v0.0.4/go.mod h1:jbMBdUU9OKHngG76FC2RUNCI9YoR28/BirXFoCp77uA=
+github.com/funatsufumiya/dds-simd v0.0.2 h1:JtkNQ7MMxZ5OGD0AQDyUE7wkIKGr7PlY1zyzDzUHPyA=
+github.com/funatsufumiya/dds-simd v0.0.2/go.mod h1:sfZFNK4J4nxr2cV5N6cQgfsfcVxE6X3fYe2+5YqG5cY=
+github.com/funatsufumiya/go-gv-video v0.0.6-simd h1:6ZQ4MhCRPkJmlIWhD7TBL3qWDr7VMeaGDCpUyNVDqio=
+github.com/funatsufumiya/go-gv-video v0.0.6-simd/go.mod h1:2fa9LoHcRwRqj7WWDiruh7gE/r0S7pJQeaStO6lKh80=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f h1:ysqRe+lvUiL0dH5XzkH0Bz68bFMPJ4f5Si4L/HD9SGk=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f/go.mod h1:i/ebyRRv/IoHixuZ9bElZnXbmfoUVPGQpdsJ4sVuX38=
 github.com/hajimehoshi/ebiten/v2 v2.8.8 h1:xyMxOAn52T1tQ+j3vdieZ7auDBOXmvjUprSrxaIbsi8=
