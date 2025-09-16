@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/funatsufumiya/ebiten_gvvideo/gvplayer"
@@ -105,10 +107,30 @@ func main() {
 	loop := true
 	args := os.Args[1:]
 	if len(args) > 0 {
-		gvPaths = args
+		first := args[0]
+		info, err := os.Stat(first)
+		if err == nil && info.IsDir() {
+			entries, err := os.ReadDir(first)
+			if err != nil {
+				log.Fatalf("failed to read directory: %v", err)
+			}
+			for _, entry := range entries {
+				if entry.IsDir() {
+					continue
+				}
+				if strings.EqualFold(filepath.Ext(entry.Name()), ".gv") {
+					gvPaths = append(gvPaths, filepath.Join(first, entry.Name()))
+				}
+			}
+			if len(gvPaths) == 0 {
+				fmt.Fprintf(os.Stderr, "[WARN] No .gv files found in directory: %s\n", first)
+			}
+		} else {
+			gvPaths = args
+		}
 	} else {
 		gvPaths = []string{"example/test_asset/test-10px.gv", "example/test_asset/test-10px.gv"}
-		fmt.Println("[INFO] Playing default GV videos. You can specify multiple .gv files as arguments.")
+		fmt.Println("[INFO] Playing default GV videos. You can specify multiple .gv files as arguments or a directory.")
 	}
 	players := make([]*gvplayer.GVPlayer, len(gvPaths))
 	errs := make([]error, len(gvPaths))
