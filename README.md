@@ -10,7 +10,7 @@ GV video ([Extreme Gpu Friendly Video Format](https://github.com/Ushio/ofxExtrem
 > Go port was almost done by GitHub Copilot. Use with care.
 
 > [!NOTE]
-> Latest version is using SIMD. If you need Pure Go implementation without SIMD, use `v0.0.4-no-simd` or `no-simd`
+> Latest version is using [SIMD](https://github.com/pehringer/simd). If you need Pure Go implementation without SIMD, use `v0.0.4-no-simd` or `no-simd`
 
 ## Example
 
