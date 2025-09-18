@@ -2,7 +2,7 @@
 
 ![screenshot](docs/screenshot.png)
 
-GV video ([Extreme Gpu Friendly Video Format](https://github.com/Ushio/ofxExtremeGpuVideo)) player for [Ebitengine](https://ebitengine.org/), using [go-gv-video](https://github.com/funatsufumiya/go-gv-video).
+GV video ([Extreme Gpu Friendly Video Format](https://github.com/Ushio/ofxExtremeGpuVideo)) player for [Ebitengine](https://ebitengine.org/), using [go-gv-video](https://github.com/funatsufumiya/go-gv-video). Pure Go.
 
 ( Partial port from [bevy_movie_player](https://github.com/funatsufumiya/bevy_movie_player) )
 
@@ -10,7 +10,7 @@ GV video ([Extreme Gpu Friendly Video Format](https://github.com/Ushio/ofxExtrem
 > Go port was almost done by GitHub Copilot. Use with care.
 
 > [!NOTE]
-> Latest version is using [SIMD](https://github.com/pehringer/simd). If you need Pure Go implementation without SIMD, use `v0.0.4-no-simd` or `no-simd`
+> Latest version is using [SIMD](https://github.com/pehringer/simd). If you need truly Pure Go implementation without SIMD, use `v0.0.4-no-simd` or `no-simd`
 
 ## Example
 
