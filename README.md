@@ -2,7 +2,7 @@
 
 ![screenshot](docs/screenshot.png)
 
-GV video ([Extreme Gpu Friendly Video Format](https://github.com/Ushio/ofxExtremeGpuVideo)) player for [Ebitengine](https://ebitengine.org/), using [go-gv-video](https://github.com/funatsufumiya/go-gv-video). Pure Go.
+GV video ([Extreme Gpu Friendly Video Format](https://github.com/Ushio/ofxExtremeGpuVideo)) player for [Ebitengine](https://ebitengine.org/), using [go-gv-video](https://github.com/funatsufumiya/go-gv-video).
 
 ( Partial port from [bevy_movie_player](https://github.com/funatsufumiya/bevy_movie_player) )
 
