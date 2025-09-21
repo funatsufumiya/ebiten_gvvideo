@@ -12,6 +12,8 @@ github.com/funatsufumiya/dds-simd v0.0.2 h1:JtkNQ7MMxZ5OGD0AQDyUE7wkIKGr7PlY1zyz
 github.com/funatsufumiya/dds-simd v0.0.2/go.mod h1:sfZFNK4J4nxr2cV5N6cQgfsfcVxE6X3fYe2+5YqG5cY=
 github.com/funatsufumiya/go-gv-video v0.0.6-simd h1:6ZQ4MhCRPkJmlIWhD7TBL3qWDr7VMeaGDCpUyNVDqio=
 github.com/funatsufumiya/go-gv-video v0.0.6-simd/go.mod h1:2fa9LoHcRwRqj7WWDiruh7gE/r0S7pJQeaStO6lKh80=
+github.com/funatsufumiya/go-gv-video v0.0.9-simd h1:HSkSxiyUcpvwyCuDDKPXR4qbRg02YAoGHrk1tUiP4+Q=
+github.com/funatsufumiya/go-gv-video v0.0.9-simd/go.mod h1:2fa9LoHcRwRqj7WWDiruh7gE/r0S7pJQeaStO6lKh80=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f h1:ysqRe+lvUiL0dH5XzkH0Bz68bFMPJ4f5Si4L/HD9SGk=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f/go.mod h1:i/ebyRRv/IoHixuZ9bElZnXbmfoUVPGQpdsJ4sVuX38=
 github.com/hajimehoshi/ebiten/v2 v2.8.8 h1:xyMxOAn52T1tQ+j3vdieZ7auDBOXmvjUprSrxaIbsi8=
