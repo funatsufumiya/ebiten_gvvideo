@@ -14,6 +14,8 @@ github.com/funatsufumiya/go-gv-video v0.0.1 h1:oRl8fJ7AnpuMPDN2WQfJVyQzeutNvb+yT
 github.com/funatsufumiya/go-gv-video v0.0.1/go.mod h1:VvDSwCZ59SeIU2Onc7v/w6l9ufBQhOyTkRNHuYASRq0=
 github.com/funatsufumiya/go-gv-video v0.0.2 h1:zq68l/bc40VBERpgDg9sn1F/ylfQ3GTcvcF4a6OJwmw=
 github.com/funatsufumiya/go-gv-video v0.0.2/go.mod h1:VvDSwCZ59SeIU2Onc7v/w6l9ufBQhOyTkRNHuYASRq0=
+github.com/funatsufumiya/go-gv-video v0.0.7-no-simd h1:QjlbwqJuEVCsCNym/QAoMDtatpzBhDaDkqLZirnNTVo=
+github.com/funatsufumiya/go-gv-video v0.0.7-no-simd/go.mod h1:VvDSwCZ59SeIU2Onc7v/w6l9ufBQhOyTkRNHuYASRq0=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f h1:ysqRe+lvUiL0dH5XzkH0Bz68bFMPJ4f5Si4L/HD9SGk=
 github.com/gen2brain/mpeg v0.3.2-0.20240412154320-a2ac4fc8a46f/go.mod h1:i/ebyRRv/IoHixuZ9bElZnXbmfoUVPGQpdsJ4sVuX38=
 github.com/hajimehoshi/ebiten/v2 v2.8.8 h1:xyMxOAn52T1tQ+j3vdieZ7auDBOXmvjUprSrxaIbsi8=
